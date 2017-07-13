@@ -24,16 +24,31 @@
 <meta name="twitter:image" src="">
 
 <base href="https://michaeltneuman.github.io">
+
+<!-- external stylesheets -->
 <link href='https://fonts.googleapis.com/css?family=Cormorant Garamond' rel='stylesheet'>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="functions.js"></script>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-1197882098728140",
-    enable_page_level_ads: true
-  });
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+}
 </script>
 
 <style>
@@ -68,12 +83,14 @@ h2, .h2 {
     font-size: 40px;
     margin: 2px;
     text-align: center;
+    padding-top: 15px;
 }
 
 p {
     font-family: 'Cormorant Garamond';
-    font-size: 28px;
+    font-size: 26px;
     font-weight: bold;
+    padding-bottom: 15px;
 }
 
 body {
@@ -96,6 +113,8 @@ img {
     border-color: black;
     background-color: lightgray;
 }
+
+
     
 .imgContainerLeft {
     float: left;  
@@ -110,6 +129,8 @@ figcaption {
     font-family: 'Cormorant Garamond';
     font-style: italic;
     font-weight: bold;
+    max-width: 340px;
+    padding-top: 15px;
 }
     
 .row {
@@ -130,13 +151,27 @@ figcaption {
 .row:nth-child(3n+0) {
     background-color: #FF883E;
 }
+    
+.spoiler {
+    color: black;
+    background-color: black;
+}
+
+.spoiler:hover {
+    background-color: inherit;
+}
+
+.mySlides {
+    padding-left: 10px;
+    display: none;
+}
 
 </style>    
 
 
 </head>
 
-<body>
+<body style="margin: auto;">
 <div class="text-left" >
     <h1>Searching for the pot of gold</h1>
     <p>The past couple of weeks I had the great fortune of being able to travel to the land of some of my ancestors, Ireland, the Emerald Isle. I traveled along with my entire immediate family which hasn't been possible for many years due to conflicting schedules and such. It was also the first time I have left the continent of North America (I've been to many states in the US and went to Niagara Falls when I was much younger) so I was pretty excited. Here's a summary of the things that I experienced, enjoyed, hated and learned throughout my travels!</p>
@@ -157,7 +192,7 @@ figcaption {
             <p>We first flew into Toronto to transfer to a separate flight to Dublin. Once we arrived, everyone in my family and apparently in the entire Toronto airport wanted to grab dinner. This poor lady making paninis at one of the stands was struggling to keep up with the long line. And of course at an airport, everyone's in a hurry and impatient. So this poor lady is getting mildly harrassed by irritated customers who aren't getting their food quickly enough. And the lines never stopped growing, more and more people showed up. I don't know, I just kind of feel bad for employees at airports. All the people they interact with are on tight schedules and are flying elsewhere so that they never interact with the employee ever again. This probably leads to a little more rudeness and dissatisfaction which just sucks. Our flight was delayed for a few minutes but I knew that was a small problem compared to what that poor lady had to deal with for the next few hours. And then again the next day. And so on.</p>
             <p>Anyways, ranting aside, our flight overseas from Toronto to Dublin Airport was flown by two pilots who claimed to have over 70 years combined of flying experience! This made me feel a little more comfortable and safe for traveling through the air. On the plane, I watched a couple of episodes of Band of Brothers. One of them contained scenes of planes being shot down out of the sky in the days leading up to D-Day. This made me feel a little less comfortable and unsafe for traveling through the air. Sleeping on planes is difficult. Especially if there is a woman on the plane speaking in a full volume conversation with the passenger next to her about Carrie Underwood for the entire flight. But everybody's got their flying story, I'm just glad to <a href="https://youtu.be/q8LaT5Iiwo4?t=120">partake in the miracle of human flight</a>.</p>
         </div>
-        <div class="row">
+        <div class="row" style="padding-bottom: 110px;">
             <h2>Day 2: Figuring Out Dublin</h2>
             <p>The first thing I noticed once leaving the airport in Dublin: everybody's on the LEFT SIDE OF THE ROAD. Now growing up I had always assumed that the United States and Canada were kind of alone in the right-side driving group. However, we discovered that most of the world does indeed drive on the right side of the road.</p>
             <div class="imgContainerRight">
@@ -191,55 +226,46 @@ figcaption {
             <p>People in Ireland are so <b>friendly!</b> We went to <a href="http://thehairylemon.ie/">The Hairy Lemon Pub</a> where the waiters joked around with us and brought us drinks while we ate tasty pub food and listened to "It Wasn't Me" by Shaggy. Serving, tipping and paying for meals in Ireland works differently than in the United States. At most places, it didn't seem like we had one specific server assigned to our table but rather the entire wait staff was there for your service. A 10-12% tip is pretty standard for a meal (or at least I was told that, who knows, I could've made a lot of people bitter). If you want to pay with a card, they bring a card machine to the table to scan yours in and then the waiters themselves put in the tip amount you tell them to.</p>
             <p>Afterwards we returned to the hotel where the American tunes continued, this time courtesy of the hotel piano man. He actually played "Piano Man" by Billy Joel and then some other hits (that song from <a href="https://www.youtube.com/watch?v=NkD10lhMMrg">La La Land (spoiler alert)</a>, Get Lucky by Daft Punk, Starlight by Muse). Overall, the first day in Dublin was not so much sight seeing as it was learning how to behave correctly (and minimize looking too much like a tourist).</p>
         </div>
-        <div class="row">
+        <div class="row" style="padding-bottom: 160px">
             <h2>Day 3: Dublin Down</h2>
-            <p>On Saturday morning, we took a tour of Trinity College, Ireland's oldest university which was founded way back in 1592. We took a guided tour around campus led by an undergraduate student who was very well versed in the history of the school. We learned about many of the school's interesting and repressive policies that used to be enacted. For instance, their old Provost George Salmon resisted allowing women into the university up until his death in 1904. There's a statue dedicated to him on the front lawn of Trinity College that is often defaced and mocked. Trinity College is sister universities with the University of California Berkeley. It is actually supposed to be pronounced Barkley (think Irish accent) like <a href="https://www.youtube.com/watch?v=jov6UlUW7ws">this guy</a>. We then went into the Trinity library where all the books are written in Latin.</p>
-            <div class="imgContainerRight">
-                <figure>
+            <div class="w3-content w3-display-container" style="width:400px;float:right;height:420px">
+                <figure class="mySlides" style="display: block">
                     <img src="trinityartwork.jpg">
                     <figcaption>If you live where those windows are, you can pop your head out and be part of the art!</figcaption>
                 </figure>
-                <figure>
+                <figure class="mySlides">
                     <img src="trinitybelltower.jpg">
-                    <figcaption>This bell tower is known as the Campanile of Trinity College. It is said that whoever passes underneath the tower when the bells toll will fail their exams. On Graduation Day, many students gather around it because they are no longer beholden to the tower's magic</figcaption>
+                    <figcaption> Legend has it that whoever passes underneath this bell tower when the bells toll will fail their exams. On Graduation Day, students gather around it because they are no longer beholden to the tower's magic</figcaption>
                 </figure>
-                <figure>
+                <figure class="mySlides">
                     <img src="trinitylibraryhall.jpg">
                     <figcaption>Statues of some of the greatest philosophers stare you down as you walk through</figcaption>
                 </figure>
-                <figure>
+                <figure class="mySlides">
                     <img src="trinitylibrarynewtonandme.jpg">
                     <figcaption><a href="https://youtu.be/danYFxGnFxQ?t=58">Watch out, we got a badass over here!</a></figcaption>
                 </figure>
+                <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
             </div>
-            <p>A few more random things I noticed that were different from the United States. A lot more people here smoke cigarettes, its just more accepted. Many places only have espresso machines, so no drip coffee. I was a cappuccino man, had to resist the urge to become hooked on <a href="https://youtu.be/VV-M69LLn5s?t=289">cafe lattes</a>. After touring the college, we walked around Merrion Square and St. Stephen's Green, two parks in the city. There was pro life rally going on near Merrion Square and they were like screaming on their megaphones and had this ginormous stage setup but only like 20 people showed up even though there were posters all around the city advertising it. We then walked down Embassy row trying to guess which countries the flags belonged to. We saw a little kid pull down his pants and start to use the sidewalk as his personal bathroom, this poor family had like 7 kids to deal with and this troublemaker just had to make a scene. For dinner in the evening we went to a very tasty restaurant called <a href="http://www.fadestreetsocial.com/">Fade Street Social</a>. Food was wonderful and the servers even offered us tips on things to do in the city! Following dinner, we walked around the city and saw some street performers play more classic American songs. By classic I mean shitty 2000s acoustic pop covers. But everybody loved 'em so more power to 'em.</p>
+            <p>On Saturday morning, we took a tour of Trinity College, Ireland's oldest university which was founded way back in 1592. We took a guided tour around campus led by an undergraduate student who was very well versed in the history of the school. We learned about many of the school's interesting and repressive policies that used to be enacted. For instance, their old Provost George Salmon resisted allowing women into the university up until his death in 1904. There's a statue dedicated to him on the front lawn of Trinity College that is often defaced and mocked. Trinity College is sister universities with the University of California Berkeley. It is actually supposed to be pronounced Barkley (think Irish accent) like <a href="https://www.youtube.com/watch?v=jov6UlUW7ws">this guy</a>. We then went into the Trinity library where all the books are written in Latin.</p>
+            <p>A few more random things I noticed that were different from the United States. A lot more people here smoke cigarettes, its just more accepted. Many places only have espresso machines, so no drip coffee. I was a cappuccino man, had to resist the urge to become hooked on <a href="https://youtu.be/VV-M69LLn5s?t=289">cafe lattes</a>. After touring the college, we walked around Merrion Square and St. Stephen's Green, two parks in the city.</p>
             <div class="imgContainerLeft">
-                <figure>
-                    <img src="poohinthepark.jpg">
-                    <figcaption>View of Merrion Square with some recognizable ice cream. I still remember <a href="https://www.youtube.com/watch?v=S4W9qyMhpN0">this song</a> from when I was little</figcaption>
-                </figure>
                 <figure>
                     <img src="oscarwilde.jpg">
                     <figcaption>"We are all in the gutter, but some of us are looking at the stars" ~ Oscar Wilde</figcaption>
                 </figure>
                 <figure>
-                    <img src="swanandducks.jpg">
-                    <figcaption>According to <a href="https://en.wikipedia.org/wiki/Swan">Wikipedia</a>, "the swans' close relatives include the geese and ducks"</figcaption>
-                </figure>
-                <figure>
-                    <img src="rulesofthepark.jpg">
-                    <figcaption>Funny old sign about rules for the park, I like rule 4 IV</figcaption>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Malta.svg">
+                    <figcaption>Can you guess which country this belongs to? Answer: <div class="spoiler">Malta</div></figcaption>
                 </figure>
                 <figure>
                     <img src="fadestreetsocialfood.jpg">
                     <figcaption>Trying a little bit of everything</figcaption>
                 </figure>
             </div>
-            <p>My brother and I concluded the night by going out on the town to see what Ireland was really all about. We met two Northern Irishmen outside of a bar who had heard of Chicago, specifically the Blackhawks. We tried to get them to explain the sport of <a href="https://en.wikipedia.org/wiki/Hurling">Hurling</a> to us as it is all the rage in Ireland. A fast paced mix of lacrosse and handball, by the end of the trip, I loved watching. They also questioned why us Americans are so obssesed with guns and we tried to explain some people's thought process behind the 2nd amendment but they generally thought that our gun crazy culture is...well a little too crazy. No comment. We took whiskey shots with a bartender, spilled Guinness in a bar that was fully carpeted for some reason (smells?) and then topped the night off with eating McDonald's in the fancy hotel lounge at 3am. We were immediately identified as tourists because we didn't know what the Big Tasty is. I still don't know what it is but I think I know two adjectives that can describe it.</p>
-            <figure>
-                <img src="lounge.jpg">
-                <figcaption>Probably spilled some sweet and sour sauce on those cushions</figcaption>
-            </figure>
+            <p>There was a pro life rally going on near Merrion Square and they were like screaming on their megaphones and had this ginormous stage setup but only like 20 people showed up even though there were posters all around the city advertising it. We then walked down Embassy row trying to guess which countries the flags belonged to. For dinner in the evening we went to a very tasty restaurant called <a href="http://www.fadestreetsocial.com/">Fade Street Social</a>. Food was wonderful and the servers even offered us tips on things to do in the city! Following dinner, we walked around the city and saw some street performers play more classic American songs. By classic I mean shitty 2000s acoustic pop covers. But everybody loved 'em so more power to 'em.</p>
+            <p>My brother and I concluded the night by going out on the town to see what Ireland was really all about. We met two Northern Irishmen outside of a bar who had heard of Chicago, specifically the Blackhawks. We tried to get them to explain the sport of <a href="https://en.wikipedia.org/wiki/Hurling">Hurling</a> to us as it is all the rage in Ireland. A fast paced mix of lacrosse and handball, by the end of the trip, I loved watching. They also questioned why us Americans are so obssesed with guns and we tried to explain some people's thought process behind the 2nd amendment but they generally thought that our gun crazy culture is...well a little too crazy. No comment. We took whiskey shots with a bartender, spilled Guinness in a bar that was fully carpeted for some reason (smells?) and then topped the night off with eating McDonald's in the fancy hotel lounge at 3am. We were immediately identified as tourists because we didn't know what the Big Tasty is. I still don't know what it is but I think I know two adjectives that describe it.</p>
         </div>
     </div>
 </div>
