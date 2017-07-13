@@ -15,7 +15,6 @@
 
 text-center {
     text-align: center;
-    border: 3px solid green;
 }
 
 h1, .h1 {
@@ -59,8 +58,6 @@ img {
     border-color: black;
     background-color: lightgray;
 }
-
-
     
 .imgContainerLeft {
     float: left;
@@ -78,13 +75,6 @@ figcaption {
     font-weight: bold;
     max-width: 340px;
     padding-top: 15px;
-}
-    
-.row {
-    border-style: solid;
-    border-width: 5px;
-    border-color: black;
-    padding: 15px;
 }
 
 .row:nth-child(3n+1) {
