@@ -28,7 +28,7 @@ h2, .h2 {
     font-size: 40px;
     margin: 2px;
     text-align: center;
-    padding-top: 15px;
+    margin-top: 20px;
 }
 
 p {
@@ -75,18 +75,6 @@ figcaption {
     font-weight: bold;
     max-width: 340px;
     padding-top: 15px;
-}
-
-.row:nth-child(3n+1) {
-    background-color: #169B62;
-}
-
-.row:nth-child(3n+2) {
-    background-color: #FFFFFF;
-}
-    
-.row:nth-child(3n+0) {
-    background-color: #FF883E;
 }
     
 .spoiler {
