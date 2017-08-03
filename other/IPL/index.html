@@ -1,0 +1,777 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>EECS 349 &mdash; Indian Premier League Match Prediction</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Indian Premier League Match Prediction Model" />
+	<meta name="keywords" content="ipl, cricket, machine learning" />
+	<meta name="author" content="Michael Neuman, Aagam Shah " />
+        
+	<meta property="og:title" content="IPL Match Prediction"/>
+	<meta property="og:image" content="http://neumanmt.github.io/images/cricket_main_background.jpg"/>
+	<meta property="og:url" content="http://neumanmt.github.io"/>
+	<meta property="og:description" content="Indian Premier League Match Prediction Model"/>
+	<meta name="twitter:title" content="IPL Match Prediction" />
+	<meta name="twitter:image" content="http://neumanmt.github.io/images/cricket_main_background.jpg" />
+	<meta name="twitter:url" content="http://neumanmt.github.io" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Simple Line Icons -->
+	<link rel="stylesheet" href="css/simple-line-icons.css">
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="css/owl.carousel.min.css">
+	<link rel="stylesheet" href="css/owl.theme.default.min.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+
+	<!-- 
+	Default Theme Style 
+	You can change the style.css (default color purple) to one of these styles
+	
+	1. pink.css
+	2. blue.css
+	3. turquoise.css
+	4. orange.css
+	5. lightblue.css
+	6. brown.css
+	7. green.css
+
+	-->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Styleswitcher ( This style is for demo purposes only, you may delete this anytime. ) -->
+	<link rel="stylesheet" id="theme-switch" href="css/style.css">
+	<!-- End demo purposes only -->
+
+
+	<style>
+	/* For demo purpose only */
+	
+	/* For Demo Purposes Only ( You can delete this anytime :-) */
+	#colour-variations {
+		padding: 10px;
+		-webkit-transition: 0.5s;
+	  	-o-transition: 0.5s;
+	  	transition: 0.5s;
+		width: 140px;
+		position: fixed;
+		left: 0;
+		top: 100px;
+		z-index: 999999;
+		background: #fff;
+		/*border-radius: 4px;*/
+		border-top-right-radius: 4px;
+		border-bottom-right-radius: 4px;
+		-webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+		-moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+		-ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+		box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+	}
+	#colour-variations.sleep {
+		margin-left: -140px;
+	}
+	#colour-variations h3 {
+		text-align: center;;
+		font-size: 11px;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		color: #777;
+		margin: 0 0 10px 0;
+		padding: 0;;
+	}
+	#colour-variations ul,
+	#colour-variations ul li {
+		padding: 0;
+		margin: 0;
+	}
+	#colour-variations li {
+		list-style: none;
+		display: inline;
+	}
+	#colour-variations li a {
+		width: 20px;
+		height: 20px;
+		position: relative;
+		float: left;
+		margin: 5px;
+	}
+	#colour-variations li a[data-theme="style"] {
+		background: #6173f4;
+	}
+	#colour-variations li a[data-theme="pink"] {
+		background: #f64662;
+	}
+	#colour-variations li a[data-theme="blue"] {
+		background: #2185d5;
+	}
+	#colour-variations li a[data-theme="turquoise"] {
+		background: #00b8a9;
+	}
+	#colour-variations li a[data-theme="orange"] {
+		background: #ff6600;
+	}
+	#colour-variations li a[data-theme="lightblue"] {
+		background: #5585b5;
+	}
+	#colour-variations li a[data-theme="brown"] {
+		background: #a03232;
+	}
+	#colour-variations li a[data-theme="green"] {
+		background: #65d269;
+	}
+
+	.option-toggle {
+		position: absolute;
+		right: 0;
+		top: 0;
+		margin-top: 5px;
+		margin-right: -30px;
+		width: 30px;
+		height: 30px;
+		background: #f64662;
+		text-align: center;
+		border-top-right-radius: 4px;
+		border-bottom-right-radius: 4px;
+		color: #fff;
+		cursor: pointer;
+		-webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+		-moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+		-ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+		box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+	}
+	.option-toggle i {
+		top: 2px;
+		position: relative;
+	}
+	.option-toggle:hover, .option-toggle:focus, .option-toggle:active {
+		color:  #fff;
+		text-decoration: none;
+		outline: none;
+	}
+
+
+	</style>
+	<!-- End demo purposes only -->
+
+
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+	<header role="banner" id="fh5co-header">
+			<div class="container">
+				<!-- <div class="row"> -->
+			    <nav class="navbar navbar-default">
+		        <div class="navbar-header">
+		        	<!-- Mobile Toggle Menu Button -->
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+		          	<a class="navbar-brand" href="index.html">IPL Match Prediction</a> 
+		        </div>
+		        <div id="navbar" class="navbar-collapse collapse">
+		          <ul class="nav navbar-nav navbar-right">
+		            <li class="active"><a href="#" data-nav-section="home"><span>Top of Page</span></a></li>
+		            <li><a href="#" data-nav-section="about"><span>Overview</span></a></li>
+		            <li><a href="#" data-nav-section="services"><span>Motivation</span></a></li>
+		            <li><a href="#" data-nav-section="features"><span>Data Set</span></a></li>
+		            <li><a href="#" data-nav-section="pricing"><span>Results</span></a></li>
+                    <li><a href="#" data-nav-section="press"><span>Future Work</span></a></li>
+		          </ul>
+		        </div>
+			    </nav>
+			  <!-- </div> -->
+		  </div>
+	</header>
+
+	<div id="slider" data-section="home">
+		<div class="owl-carousel owl-carousel-fullwidth">
+		    <div class="item" style="background-image:url(images/cricket_main_background.jpg)">
+		    	<div class="container" style="position: relative;">
+		    		<div class="row">
+					    <div class="col-md-7 col-sm-7">
+			    			<div class="fh5co-owl-text-wrap">
+						    	<div class="fh5co-owl-text">
+						    		<h1 class="fh5co-lead to-animate">EECS 349 Project: <br/>Indian Premier League<br/>Match Prediction</h1>
+						    	</div>
+						    </div>
+					    </div>
+		    		</div>
+		    	</div>
+		    </div>
+		    <div class="item" style="background-image:url(images/cricket_alt_background.jpg)">
+		    	<div class="overlay"></div>
+		    	<div class="container" style="position: relative;">
+                    <div class="row">
+                        <div class="col-md-7 col-sm-7">
+                            <div class="fh5co-owl-text-wrap">
+						    	<div class="fh5co-owl-text">
+                                    <h1 class="fh5co-lead to-animate">Project Team Members:<br/>Aagam Shah<br/>Michael Neuman</h1>
+                                    <h4 class="fh5co-sub-lead to-animate">We would also like to thank all our classmates who peer reviewed our project.</h4>
+						    	</div>
+						    </div>
+					    </div>
+		    		</div>	
+                </div>
+		    	</div>
+		   </div>
+        </div>
+        
+	<div id="fh5co-about-us" data-section="about"  style="background-color: #6172F4">
+		<div class="container">
+			<div class="row" id="about-us">
+				<div class="col-md-12 section-heading text-center">
+					<h2 class="to-animate" style="color:white">Overview</h2>
+					<div class="row to-animate">
+                        <img src="images/wikipedia_generic_cricket_pic.JPG" style="width: 50%; height: 350px;"><img src="images/mumbai_championship_espn.jpg" style="transform: scaleX(-1); width: 50%; height: 350px;">
+                        </div>
+                    <div class="row" style="text-align:left">
+						<div class="col-md-8 col-md-offset-2 to-animate"  style="color:white">
+                            <p><br/>Cricket is a game played between two teams made up of eleven players each. The game is played with a bat and ball. Players score runs by running between two sets of wooden posts called <a href="https://en.wikipedia.org/wiki/Wicket" style="color:white" target="_blank">wickets</a>. Cricket originated in England in the 16th century. Today it is popular in countries throughout the world including England,
+                            Australia, India, South Africa and many others.</p>
+                            <p>When batting, a team has two players on the field (called batsmen). The goal of Cricket is to score more runs that the other team. Players earn runs through hitting the ball past a boundary or by running between wickets. When bowling, the bowler is trying to hit one of the wickets and make the batter miss their swing. The bowling team remains on the field for either 20 overs or until 10 batsmen are out. An over is defined as six balls bowled by the bowler. A batsman is out if the ball hits a wicket either from a missed swing or while a batsman is running between two wickets, or if the ball is caught in midair following a hit.</p>
+                            <p>The Indian Premier League Twenty20 League was started in 2008 by <a href="http://www.bcci.tv/" style="color:white">The Board of Control for Cricket in India (BCCI)</a>. In the 2017 season, there were eight active teams: Delhi Daredeviles, Kings Xi Punjab, Kolkata Knight Riders, Mumbai Indians, Royal Challengers Bangalore, Sunrisers Hyderabad, Rising Pune Supergiant and the Gujarat Lions. Over the course of a season, each team plays each other twice, once as the home team and once as the away team. At the end of the season, the top four teams in the league qualify for the Playoffs. The 2017 IPL Championship was one of the most exciting games seen in league history with <a href="http://www.espncricinfo.com/indian-premier-league-2017/content/story/1098739.html" style="color:white;" target="_blank">the Mumbai Indians defeating the Rising Pune Supergiant by only ONE RUN to win their third title.</a> More details about the league's history and further explanation of the rules can be found on the official <a href="http://www.iplt20.com" style="color:white" target="_blank">Indian Premier League website</a>.</p>
+                            <p><a class="twitter-timeline" data-lang="en" data-width="1000" data-height="500" data-theme="light" href="https://twitter.com/IPL">Tweets by @IPL</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                            </p>    
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="fh5co-our-services" data-section="services" style="background-color: white">
+		<div class="container">
+			<div class="row row-bottom-padded-lg">
+				<div class="col-md-12 section-heading text-center">
+					<h2 class="to-animate">Motivation</h2>
+					<div class="row to-animate">
+						<div class="col-md-8 col-md-offset-2 to-animate">
+							<h3>Why did we decide to build our match predicting model?</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<div class="box to-animate" style="background-color: #fafafa; border: 2px solid #6172F4">
+						<div class="icon colored-2"><span><i class="icon-user"></i></span></div>
+						<h3>USEFUL FOR ALL FANS</h3>
+						<p>Whether you are a super passionate fan who likes to crunch all the numbers or just someone who enjoys watching the sport of Cricket, match prediction results can provide many helpful insights into a team's strengths and weaknesses.</p>
+					</div>
+                </div>
+                <div class="col-md-4">	
+                    <div class="box to-animate" style="background-color: #fafafa; border: 2px solid #6172F4">
+						<div class="icon colored-4"><span><i class="icon-screen-desktop"></i></span></div>
+						<h3>POPULARITY</h3>
+						<p>Despite only being around since 2008, the Indian Premier League is one of India's most watched spectacles of entertainment. Broadcasts of the first three matches of the 2017 Indian Premier League season reached over 185 million viewers.</p>
+					</div>
+                </div>
+                <div class="col-md-4">	
+					<div class="box to-animate" style="background-color: #fafafa; border: 2px solid #6172F4">
+						<div class="icon colored-1"><span><i class="icon-money"></i></span></div>
+						<h3>MONETARY</h3>
+						<p>The Indian Premier League contributed over $180 million of India's Gross Domestic Product in 2015 and the Cricket betting markets have continued to grow. Match prediction results are of highest importance in this market.</p>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+
+	<div id="fh5co-features" data-section="features" style="background-color: #6172F4">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 section-heading text-center">
+					<h2 class="to-animate" style="color:white">Data Set</h2>
+					<div class="row to-animate">
+						<div class="col-md-8 col-md-offset-2 to-animate" style="text-align: left">
+							<p style="color:white">Our data set contains match results from the past 9 Indian Premier League Seasons. There were initially 136499 instances with 21 attributes where is an instance is a single bowl in a match. After removing certain instances with missing attributes and removing irrelavant attributes, our final data set contained 577 matches and 21554 instances. Within each instance, there we specified 14 attributes with the following possible values:</p>
+                            <table style="width:100%; border: 2px solid #000000; border-collapse: collapse;text-align: center">
+                                <col width="20%">
+                                <col width="20%">
+                                <col width="60%">
+                              <tr style="background-color: #dddddd">
+                                <th style="text-align: center">Attribute</th>
+                                <th style="text-align: center">Description</th> 
+                                <th style="text-align: center">Possible Input Values</th>
+                              </tr>
+                              <tr style="background-color: white">
+                                <td>inning</td>
+                                <td>current inning of given match</td> 
+                                <td>1 or 2</td>
+                              </tr>
+                                <tr style="background-color: #dddddd">
+                                <td>over</td>
+                                <td>current over of <br/>given inning</td> 
+                                <td>whole numbers (1-20)</td>
+                              </tr>
+                                <tr style="background-color: white">
+                                <td>team1, team2</td>
+                                <td>team variables of a given match</td> 
+                                <td>Chennai Super kings, Deccan Chargers, Delhi Daredevils, Gujarat Lions, Kings Xi Punjab, Kochi Tuskers Kerala, Kolkata Knight Riders, Mumbai Indains, Pune Warriors, Rajasthan Royals, Rising Pune Supergiants, Royal Challengers Bangalore, Sunrisers Hyderabad<br/>(13 teams, 8 currently active)</td>
+                              </tr>
+                                <tr style="background-color: #dddddd">
+                                <td>total_runs</td>
+                                <td>number of runs scored in given over</td> 
+                                <td>whole numbers</td>
+                              </tr>
+                                <tr style="background-color: white">
+                                <td>player_dismissed</td>
+                                <td>number of wickets in a given over</td> 
+                                <td>whole numbers (maximum of 10)</td>
+                            </tr>
+
+                                <tr style="background-color: #dddddd">
+                                <td>innings_score</td>
+                                <td>total number of<br/> runs scored in a<br/> given inning</td> 
+                                <td>whole numbers</td>
+                              </tr>
+                                <tr style="background-color: white">
+                                <td>score_target</td>
+                                <td>how many total runs team2 needs to score to tie team1</td> 
+                                <td>whole numbers and -1 for all overs in which team1 is batting</td>
+                              </tr>
+                                <tr style="background-color: #dddddd">
+                                <td>remaining_target</td>
+                                <td>remaining number of runs team2 needs to score at a given over</td> 
+                                <td>whole numbers (maximum of value equal to score_target) and<br/> -1 for all overs in which team1 is batting</td>
+                              </tr>
+                                <tr style="background-color: white">
+                                <td>run_rate</td>
+                                <td>number of runs per over batting_team is averaging</td> 
+                                <td>positive numbers</td>
+                              </tr>
+                                <tr style="background-color: #dddddd">
+                                <td>required_run_rate</td>
+                                <td>how many runs per over team2 needs to average for remainder of match to tie team1</td> 
+                                <td>positive numbers and<br/> -1 for all overs in which team1 is batting</td>
+                              </tr>
+                                <tr style="background-color: white">
+                                <td>runrate_diff</td>
+                                <td>difference between run_rate and required_run_rate</td> 
+                                <td>real numbers (maximum of value equal to -required_run_rate)</td>
+                              </tr>
+                                <tr style="background-color: #dddddd">
+                                <td>is_batting_team</td>
+                                <td>whether team1 is currently batting or not</td> 
+                                <td>1 if team1 is batting, 0 if team2 is batting</td>
+                              </tr>
+                                <tr style="background-color: white; font-weight: bold;">
+                                <td>CLASSIFICATION:<br/>winner </td>
+                                <td>team variable of team that won a given match</td> 
+                                <td>team1, team2</td>
+                              </tr>
+                            </table>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4 single-animate animate-features-3">
+					<a href="https://www.kaggle.com/manasgarg/ipl" target="_blank" class="btn btn-primary btn-block" style="background-color:white; border: 1px solid black; color: #6172F4">Link to data set</a>
+				</div>
+			</div>
+		</div>
+
+	<div id="fh5co-pricing" data-section="pricing">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 section-heading text-center">
+					<h2 class="single-animate animate-pricing-1">Results</h2>
+                    <div class="row to-animate">
+						<div class="col-md-8 col-md-offset-2 subtext to-animate">
+							<p style="text-align: left">To build our models, we split up our dataset into 13 separate csv files, one for each team in the Indian Premier League. We decided to remove two teams' datasets (Kochi Tuskers Kerala and Rising Pune Supergiant) due to multiple problems with data (small number of instances, missing attributes). Note the discrepencies in number of instances is due to certain teams playing different number of matches each season. The Deccan Chargers and Pune Warriors left the league in 2012 and 2013 respectively. We decided to keep them within our data set as the teams have the possibility of returning to the league. The Chennai Super Kings and Rajasthan Royals were banned for the 2016 and 2017 seasons but will return in 2018.</p>
+						</div>
+                    <table align="center" style="width:50%; background-color: white; text-align: center; border: 2px solid #000000; border-collapse: collapse;">
+                        <col width="50%">
+                        <col width="50%">
+                          <tr style="background-color: #dddddd">
+                            <th style="text-align:center;">Team1 Value</th>
+                            <th style="text-align:center;">Number of Instances (split on 'over')</th> 
+                          </tr>
+                        <tr>
+                            <td>Chennai Super Kings</td>
+                            <td>2990</td>
+                        </tr>
+                        <tr style="background-color: #dddddd">
+                            <td>Deccan Chargers</td>
+                            <td>1679</td>
+                        </tr>
+                        <tr>
+                            <td>Delhi Daredevils</td>
+                            <td>2087</td>
+                        </tr>
+                        <tr style="background-color: #dddddd">
+                            <td>Gujarat Lions</td>
+                            <td>231</td>
+                        </tr>
+                        <tr>
+                            <td>Kolkata Knight Riders</td>
+                            <td>2342</td>
+                        </tr>
+                        <tr style="background-color: #dddddd">
+                            <td>Kings XI Punjab</td>
+                            <td>2634</td>
+                        </tr>
+                        <tr>
+                            <td>Mumbai Indians</td>
+                            <td>2967</td>
+                        </tr>
+                        <tr style="background-color: #dddddd">
+                            <td>Pune Warriors</td>
+                            <td>777</td>
+                        </tr>
+                        <tr>
+                            <td>Royal Challengers Bangalore</td>
+                            <td>2349</td>
+                        </tr>
+                        <tr style="background-color: #dddddd">
+                            <td>Rajasthan Royals</td>
+                            <td>2082</td>
+                        </tr>
+                        <tr>
+                            <td>Sunrisers Hyderabad</td>
+                            <td>1416</td>
+                        </tr>
+                        <caption style="font-style: italic">Number of instances for each individual team dataset (there were 21554 total instances)</caption>
+                </table>
+			</div>
+                    <br/><br/>
+					<div class="row to-animate">
+						<div class="col-md-8 col-md-offset-2 subtext single-animate animate-pricing-2">
+							<p style="text-align:left;">We first trained a Logistic Regression model. We removed instances where it was the 2nd inning and after the 14th over to be used as a testing set. Thus our model offers a prediction of a match based on information obtained from the first inning and the first 14 overs of the second, meaning our accuracy results will be higher than a random match prediction made based only on a given pair of teams. Our accuracy results are displayed in a table below along with the highest positive and negative absolute value coefficients for team2. This translates to the teams that team1 performs best (positive) and worst (negative) against. We also include a graph comparing the accuracy results of each model by team.<br/></p>
+						</div>
+                    <table align="center" style="width:90%; background-color: white; text-align: center; border: 2px outset #6172F4;">
+                        <col width="22%">
+                        <col width="27%">
+                        <col width="27%">
+                        <col width="8%">
+                        <col width="8%">
+                        <col width="8%">
+                          <tr>
+                            <th style="text-align:center;">Team</th>
+                            <th style="text-align:center;">Maximum attribute (LR)</th>
+                            <th style="text-align:center;">Minimum attribute (LR)</th>
+                            <th style="text-align:center;">Logistic Regression</th>
+                            <th style="text-align:center;">Naive <br/>Bayes</th>
+                            <th style="text-align:center;">k-Nearest <br/>Neighbor</th>
+                          </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Chennai Super Kings</td>
+                            <td>Pune Warriors (0.9591)</td>
+                            <td>Sunrisers Hyderabad (-0.4952)</td>
+                            <td>89.09%</td>
+                            <td>80.78%</td>
+                            <td>84.42%</td>
+                        </tr>
+                        <tr>
+                            <td>Deccan Chargers</td>
+                            <td>Kolkata Knight Riders (16.4045)</td>
+                            <td>Kochi Tuskers Kerala (-22.958)</td>
+                            <td>87.27%</td>
+                            <td>81.36%</td>
+                            <td>87.73%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Delhi Daredevils</td>
+                            <td>Rising Pune Supergiants (21.148)</td>
+                            <td>Pune Warriors (-22.4644)</td>
+                            <td>86.96%</td>
+                            <td>82.21%</td>
+                            <td>83.00%</td>
+                        </tr>
+                        <tr>
+                            <td>Gujarat Lions</td>
+                            <td>Sunrisers Hyderabad (27.9906)</td>
+                            <td>Delhi Daredevils (-34.061)</td>
+                            <td>88.89%</td>
+                            <td>100.00%</td>
+                            <td>96.30%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Kolkata Knight Riders</td>
+                            <td>Pune Warriors (26.0993)</td>
+                            <td>Rajasthan Royals (-375.5865)</td>
+                            <td>87.85%</td>
+                            <td>79.86%</td>
+                            <td>85.07%</td>
+                        </tr>
+                        <tr>
+                            <td>Kings Xi Punjab</td>
+                            <td>Rising Pune Supergiants (56.6141)</td>
+                            <td>Deccan Chargers (-2.8154)</td>
+                            <td>83.38%</td>
+                            <td>61.23%</td>
+                            <td>86.77%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Mumbai Indians</td>
+                            <td>Kochi Tuskers Kerala (22.0244)</td>
+                            <td>Pune Warriors (-39.4622)</td>
+                            <td>93.77%</td>
+                            <td>86.75%</td>
+                            <td>90.39%</td>
+                        </tr>
+                        <tr>
+                            <td>Pune Warriors</td>
+                            <td>Royal Challengers Bangalore (65.331)</td>
+                            <td>Mumbai Indians (-9.166)</td>
+                            <td>86.14%</td>
+                            <td>77.23%</td>
+                            <td>89.11%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Royal Challengers Bangalore</td>
+                            <td>Kolkata Knight Riders (19.7319)</td>
+                            <td>Rising Pune Supergiants (-41.0558)</td>
+                            <td>83.55%</td>
+                            <td>64.80%</td>
+                            <td>85.53%</td>
+                        </tr>
+                        <tr>
+                            <td>Rajasthan Royals</td>
+                            <td>Kochi Tuskers Kerala (18.8983)</td>
+                            <td>Deccan Chargers (-1.5471)</td>
+                            <td>87.55%</td>
+                            <td>80.93%</td>
+                            <td>87.16%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Sunrisers Hyderabad</td>
+                            <td>Pune Warriors (15.6221)</td>
+                            <td>Royal Challengers Bangalore (-1.9229)</td>
+                            <td>87.22%</td>
+                            <td>72.22%</td>
+                            <td>81.67%</td>
+                        </tr>
+                        <caption style="font-style:italic">Accuracy of Weka's Logistic, NaiveBayes and lBk trained models on test set</caption>
+                </table>
+                         <br/>
+                        <img src="images/team_model_accuracy.png" style="width:1000px;height:auto">
+                        <br/>
+                        
+                        <!--
+					<div class="row to-animate">
+						<div class="col-md-8 col-md-offset-2 subtext single-animate animate-pricing-2">
+							<p style="text-align:left;"><br/>Next we trained each dataset on Weka's NaiveBayes model, performing the same data split as used on our Logistic Regression model. Our accuracy results are displayed in a table below.</p>
+						</div>
+                    <table align="center" style="width:45%; background-color: white; text-align: center; border: 2px outset #6172F4;">
+                        <col width="50%">
+                        <col width="50%">
+                          <tr>
+                            <th style="text-align:center;">Team1 Value</th>
+                            <th style="text-align:center;">Accuracy</th>
+                          </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Chennai Super Kings</td>
+                            <td>80.78%</td>
+                        </tr>
+                        <tr>
+                            <td>Deccan Chargers</td>
+                            <td>81.36%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Delhi Daredevils</td>
+                            <td>82.21%</td>
+                        </tr>
+                        <tr>
+                            <td>Gujarat Lions</td>
+                            <td>100.00%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Kolkata Knight Riders</td>
+                            <td>79.86%</td>
+                        </tr>
+                        <tr>
+                            <td>Kings Xi Punjab</td>
+                            <td>61.23%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Mumbai Indians</td>
+                            <td>86.75%</td>
+                        </tr>
+                        <tr>
+                            <td>Pune Warriors</td>
+                            <td>77.23%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Royal Challengers Bangalore</td>
+                            <td>64.80%</td>
+                        </tr>
+                        <tr>
+                            <td>Rajasthan Royals</td>
+                            <td>80.93%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Sunrisers Hyderabad</td>
+                            <td>72.22%</td>
+                        </tr>
+                        <caption style="font-style: italic">Results of running Weka's NaiveBayes Model on each individual team's dataset</caption>
+                </table>
+                    <br/><br/>
+                    <div class="row to-animate">
+						<div class="col-md-8 col-md-offset-2 subtext single-animate animate-pricing-2">
+							<p style="text-align:left;"><br/>Next we trained each dataset on Weka's lBk (k-nearest neighbor) model. We ran cross-validation to find the optimal k value for highest accuracy. Our accuracy results and optimal k value results are displayed in a table below.</p>
+						</div>
+                    <table align="center" style="width:40%; background-color: white; text-align: center; border: 2px outset #6172F4;">
+                        <col width="50%">
+                        <col width="20%">
+                        <col width="30%">
+                          <tr>
+                            <th style="text-align:center;">Team1 Value</th>
+                            <th style="text-align:center;">Optimal k value</th>
+                            <th style="text-align:center;">Accuracy</th>
+                          </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Chennai Super Kings</td>
+                            <td>1</td>
+                            <td>84.42%</td>
+                        </tr>
+                        <tr>
+                            <td>Deccan Chargers</td>
+                            <td>1</td>
+                            <td>87.73%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Delhi Daredevils</td>
+                            <td>1</td>
+                            <td>83.00%</td>
+                        </tr>
+                        <tr>
+                            <td>Gujarat Lions</td>
+                            <td>1</td>
+                            <td>96.30%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Kolkata Knight Riders</td>
+                            <td>1</td>
+                            <td>85.07%</td>
+                        </tr>
+                        <tr>
+                            <td>Kings Xi Punjab</td>
+                            <td>1</td>
+                            <td>86.77%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Mumbai Indians</td>
+                            <td>1</td>
+                            <td>90.39%</td>
+                        </tr>
+                        <tr>
+                            <td>Pune Warriors</td>
+                            <td>1</td>
+                            <td>89.11%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Royal Challengers Bangalore</td>
+                            <td>1</td>
+                            <td>85.53%</td>
+                        </tr>
+                        <tr>
+                            <td>Rajasthan Royals</td>
+                            <td>5</td>
+                            <td>87.16%</td>
+                        </tr>
+                        <tr style="background-color: #6172F4; color: white;">
+                            <td>Sunrisers Hyderabad</td>
+                            <td>1</td>
+                            <td>81.67%</td>
+                        </tr>
+                        <caption style="font-style: italic">Results of running Weka's lBk (k-Nearest Neighbor) Model <br/>on each individual team's dataset</caption>
+                </table>
+                        <br/><br/>
+-->
+                        </div>
+                    <div class="col-md-8 col-md-offset-2 subtext single-animate animate-pricing-2" style="text-align:left"><br/>After running each of our trained models, we obtained the following results:
+                        <ul>
+                            <h3 style="font-weight: bold;">Logistic Model Findings</h3> 
+                            <li>Chennai Super Kings did not have a strong advantage or disadvantage against any single given team (all team weights were between -1 and 1).</li>
+                            <li>Kolkata Knight Riders had a strong disadvantage against the Rajasthan Royals (coefficient of -375.5865)</li>
+                            <li>Large variance in data due to the small number of unique matches (577). The league has only been around for 10 seasons and there has been volatility in team participation. As the league continues, more consistent data can be collected and used to better improve the model. Our hypothesis is that as the teams play each other more often, the coefficients of team variables will decrease in importance and move closer to zero with variations depending on records between a given pair of teams</li>
+                            <li>Similarly the Gurajat Lions and Delhi Daredevils have only played in two matches which the Delhi Daredevils both won. This explains the large negative coefficient assigned (-34.061)</li>
+                            <li>Overall, we can see that the logistic model will perform with an accuracy >83% for any given team, meaning we can confidently predict the winner of a match if we have information from the early overs</li>
+                            <br/>
+                            <h3 style="font-weight: bold;">Naive Bayes Model Findings</h3>
+                            <li>The 100% accuracy obtained on the Gujarat Lions can be attributed to the small size of the match dataset (231 instances) compared to all other datasets (on average, ~2132 instances)</li>
+                            <li>With the exception of the Gujarat Lions dataset, all other NaiveBayes models were outperformed by the Logistic Regression model</li>
+                            <li>A NaiveBayes model doesn't completely make sense for our given context as certain parameters are not independent of each other (run_rate_diff)</li>
+                            <br/>
+                            <h3 style="font-weight: bold;">k-Nearest Neighbor Model Findings</h3>
+                            <li>The Rajasthan Royals were the only team to achieve maximum accuracy with k &ne; 1 (accuracy was obtained at k = 5)</li>
+                            <li>The Gujarat Lions model's higher accuracy can again be attributed to small dataset size</li>
+                            <li>Results were comparable to the Logistic Regression model with 5 out of 11 teams' datasets outperforming</li>
+                        </ul>
+            </div>
+
+                
+        </div>
+    </div>
+</div>
+
+<div id="fh5co-press" data-section="press" style="background-color: #6172F4">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 section-heading text-center">
+					<h2 class="single-animate animate-press-1" style="color:white">Future Work</h2>
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 subtext single-animate animate-press-2">
+							<p style="color:white;text-align:left">Our model only offers predictions based off previous knowledge of statistics from a given match. One possible area for exploration would be to develop a prediction model to take in two specific teams and give the probability that each team could win prior to a match. Looking even deeper, it would be great if we could develop a probabilistic model that could be used in real-time to see a team's probability during a given match. Currently, our model does not include individual player's statistics as attributes. This is due to lack of a dataset that provides such statistics. One area for future work could be to also include those attributes in our model. This model could then be used by the teams themselves to help them decide which players should be included in a particular match. As the Indian Premier League continues to grow in size and continues through more and more seasons, the right time for developing a great prediction model is now rather than later.</p>
+						</div>
+                       
+					</div>
+                    <br/><br/>
+                     </div>
+				</div>
+        </div>
+        <div class="row">
+        <div class="col-md-4 col-md-offset-4 single-animate animate-features-3">
+            <a href="https://neumanmt.github.io/IPLFinalReport.pdf" target="_blank" class="btn btn-primary btn-block" style="background-color:white; border: 1px solid black; color: #6172F4">Download our report</a>
+        </div>
+    </div>
+    </div>
+
+</div>
+	<footer id="footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-bottom-padded-sm">
+				<div class="col-md-12">
+                    <p style="text-align: center;">Project created to fulfill final project requirement for <a href="http://www.northwestern.edu">Northwestern University</a>'s Spring Quarter 2017 EECS 349 Machine Learning class taught by Professor Doug Downey<br/>Contact the creators: <a href="mailto:michaelneuman2020@u.northwestern.edu">Michael Neuman</a> and <a href="mailto:aagamshah2017@u.northwestern.edu">Aagam Shah</a></p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	
+
+	
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Owl Carousel -->
+	<script src="js/owl.carousel.min.js"></script>
+	<!-- Main JS (Do not remove) -->
+	<script src="js/main.js"></script>
+
+	</body>
+</html>
